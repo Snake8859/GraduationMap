@@ -1,0 +1,14 @@
+<!--pages/map/resultMap.wxml-->
+
+<canvas canvas-id="myCanvas" style="width: {{canvaswidth}}px; height: {{canvasheight}}px;">
+  <!--<map id="map" class='map' longitude="{{longitude}}" latitude="{{latitude}}" scale="5" markers='{{markers}}'></map> -->
+  <view class="img_box">
+  <image src="{{src}}"></image>
+  </view>
+</canvas>
+<view class="map_text">
+<text>前往的城市：{{textData.province}}{{textData.city}}</text>
+<input class="weui-input" placeholder="写下你所想写的话"/>
+<!--<button class="weui-btn mini-btn" type="primary" size="mini" bindtap='save'>保存图片</button>-->
+</view>
+

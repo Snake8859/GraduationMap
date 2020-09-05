@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<!-- 
+		#hibernate.dialect org.hibernate.dialect.MySQLDialect
+		#hibernate.connection.driver_class com.mysql.jdbc.Driver
+		#hibernate.connection.url jdbc:mysql:///test
+		#hibernate.connection.username gavin
+		#hibernate.connection.password
+		 -->
+		 <!-- 五个必选配置 -->
+		 <!-- 数据库驱动 -->
+		 <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		 <!-- 数据库地址 -->
+		 <property name="hibernate.connection.url">jdbc:mysql://120.79.198.96:3306/gMap?userUnicode=true&amp;characterEncoding=UTF8</property>
+		 <!-- 账号 -->
+		 <property name="hibernate.connection.username">root</property>
+		 <!-- 密码 -->
+		 <property name="hibernate.connection.password">654285370</property>
+		 <!-- 数据库方言 -->
+		 <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		  <!-- 
+			#hibernate.show_sql true
+			#hibernate.format_sql true
+		  -->
+		  
+		 <!-- 二个可选配置 -->
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.format_sql true">true</property>
+		 
+		 <!-- 事物的隔离级别 -->
+		 <property name="hibernate.connection.isolation">4</property>
+		 <!-- 指定session与当前线程绑定 -->
+		 <property name="hibernate.current_session_context_class">thread</property>
+		 
+		 <!-- orm元数据导入 -->
+		 <mapping resource="cn/gis/bean/WxUser.hbm.xml"/>
+		 <mapping resource="cn/gis/bean/WxLocationInfo.hbm.xml"/>
+	</session-factory>
+</hibernate-configuration>

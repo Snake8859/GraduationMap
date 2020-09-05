@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- orm元数据 -->
+<hibernate-mapping>
+	<!--  `openId` varchar(64) NOT NULL COMMENT '用户id',
+  `nickName` varchar(64) DEFAULT NULL COMMENT '用户昵称',
+  `gender` char(1) DEFAULT NULL COMMENT '用户性别',
+  `loginNumber` int(11) DEFAULT NULL COMMENT '登录次数', -->
+
+	<class name="cn.gis.bean.WxUser" table="t_user">
+		<id name="openId" column="openId">
+		<!-- hibernate不去维护，由开发者去维护主键 -->
+			<generator class="assigned"></generator>
+		</id>
+		<property name="nickName" column="nickName"></property>
+		<property name="gender" column="gender" ></property>
+		<property name="loginNumber" column="loginNumber"></property>
+	</class>
+</hibernate-mapping>

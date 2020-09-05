@@ -1,0 +1,22 @@
+
+<view class='map_container'>
+  <map class="map" id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="5" markers="{{markers}}"></map> 
+</view>
+<form bindsubmit='getAddr'>
+    <view class="map_text">
+     <text class="h1">当前的位置:{{textData.name}}</text>
+    <text>{{textData.desc}}</text>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+                  <view class="weui-cell__hd">
+                      <view class="weui-label">地址</view>
+                  </view> 
+                  <view class="weui-cell__bd">
+                      <input name='addr' class="weui-input" placeholder="请输入地址"/>
+                      <button class="weui-btn mini-btn"  
+                      formType="submit" type="primary" size="mini">确认</button>
+                  </view>
+      </view>
+  </view>
+</view>
+</form>

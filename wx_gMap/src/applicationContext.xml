@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd ">
+	<!-- spring测试 -->
+	<!-- <bean name="wxUser" class="cn.gis.bean.WxUser"></bean> -->
+	<!-- <bean name="springTest" class="cn.gis.test.SpringTest">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean> -->
+	
+	<!-- 读取db.properties配置文件 -->
+	<context:property-placeholder location="classpath:db.properties" />
+	<!-- 配置c3p0连接池 -->
+	<bean name="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driverClass}"></property>
+		<property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
+		<property name="user" value="${jdbc.user}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean>
+	<!-- spring整合hibernate -->
+	<bean name="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<!-- 连接池注入sessionFactory -->
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 配置hibernate基本信息 -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect" >org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql" >true</prop>
+				<prop key="hibernate.format_sql" >true</prop>
+			</props>
+		</property>
+		<!-- 引入orm元数据,指定orm元数据所在的包路径,spring会自动读取包中的所有配置 -->
+		<property name="mappingDirectoryLocations" value="classpath:cn/gis/bean"></property>
+	</bean>
+	
+	<!-- 开启注解配置 -->
+	<!-- <context:component-scan base-package="cn.gis.web"></context:component-scan> -->
+	
+	<!-- 配置事务核心管理器 -->
+	<bean name="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" ></property>
+	</bean>
+	
+	<!-- 配置通知 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="save*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="false"/>
+			<tx:method name="update*" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="false"/>
+			<tx:method name="isNewUser" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- 将通知织入到目标对象 -->
+	<aop:config>
+		<!-- 配置切点 -->
+		<aop:pointcut expression="execution(* cn.gis.service.impl.*ServiceImpl.*(..))" id="txPc"/>
+		<!-- 配置切面 -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPc"/>
+	</aop:config>
+	
+	<!-- service -->
+	<bean name="userService" class="cn.gis.service.impl.UserServiceImpl">
+		<property name="dao" ref="userDao"></property>
+	</bean>
+	<bean name="locationService" class="cn.gis.service.impl.LocationServiceImpl">
+		<property name="dao" ref="locationDao"></property>
+	</bean>
+	
+	<!-- dao -->
+	<bean name="userDao" class="cn.gis.dao.impl.UserDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean name="locationDao" class="cn.gis.dao.impl.LocationDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	
+	
+	
+</beans>

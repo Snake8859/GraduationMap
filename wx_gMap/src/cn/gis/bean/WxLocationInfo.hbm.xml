@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- orm元数据 -->
+<hibernate-mapping>
+	<class name="cn.gis.bean.WxLocationInfo" table="t_locationInfo">
+		<id name="lId" column="lId">
+		<!-- hibernate不去维护，由开发者去维护主键 -->
+			<generator class="assigned"></generator>
+		</id>
+		<property name="initialProvince" column="initialProvince"></property>
+		<property name="initialCity" column="initialCity"></property>
+		<property name="initialLocation" column="initialLocation"></property>
+		<property name="initalLng" column="initialLongitude"></property>
+		<property name="initalLat" column="initialLatitude"></property>
+		<property name="province" column="province"></property>
+		<property name="city" column="city"></property>
+		<property name="location" column="location"></property>
+		<property name="lng" column="longitude"></property>
+		<property name="lat" column="latitude"></property>
+		<property name="modifyTime" column="modifyTime"></property>
+		<property name="keyWords" column="keyWord"></property>
+		<property name="openId" column="openId"></property>
+	</class>
+</hibernate-mapping>
